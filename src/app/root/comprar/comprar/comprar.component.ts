@@ -4,6 +4,7 @@ import { ViagemService } from './../../viagem/viagem/viagem.service';
 import { Destino } from '../../viagem/viagem/destino';
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Viagem } from '../../viagem/viagem/viagem';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Viagem } from '../../viagem/viagem/viagem';
 })
 export class ComprarComponent implements OnInit {
   @ViewChildren(CardViagemComponent) cardsViagem: QueryList<CardViagemComponent>;
-  mensagem: string = 'Selecione o local da partida';
+  mensagem: string = 'Selecione o local do Destino';
   partidaSelecionada = false;
   destinos: Destino[] = [];
   itens: string[] = [];
@@ -27,7 +28,7 @@ export class ComprarComponent implements OnInit {
   destinoSelecionado: string = "";
   selecionando: string = "";
   selecionado: string;
-  constructor(private http: ViagemService) { }
+  constructor(private http: ViagemService, private router: Router) { }
 
   ngOnInit(): void {
     this.http.getDestino()
@@ -95,6 +96,7 @@ export class ComprarComponent implements OnInit {
         viagem =>{
           console.log("foi salvo")
           console.log(viagem)
+          this.router.navigate(['/viagem']);
         },
         erro => console.log(erro)
       );
