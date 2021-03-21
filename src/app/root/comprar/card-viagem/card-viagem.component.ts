@@ -9,7 +9,9 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class CardViagemComponent implements OnInit {
 
   estaSelecionando: boolean = false;
+  atual: string;
   @Input()pathImg: string;
+  @Input()destinoSelecionado: boolean;
   @Input()cardTitle: string = "<default>";
   @Input()descricao: string = "<default>";
   @Input()anyActivated: boolean = false;
@@ -19,6 +21,7 @@ export class CardViagemComponent implements OnInit {
   @Output()isActivatedOut = new EventEmitter<boolean>();
   
   isActivated: boolean = false;
+  isDestino: boolean = false;
   isSame: boolean = false;
 
   constructor() { }
@@ -28,18 +31,13 @@ export class CardViagemComponent implements OnInit {
   }
 
   selecionar(){
-    // this.selecionando.emit(this.cardTitle);
-    this.estaSelecionando = !this.estaSelecionando;
-    this.destinoOut.emit(this.cardTitle);
-    console.log("card " + this.anyActivated);
-    this.isActivated = !this.isActivated;
+      this.estaSelecionando = !this.estaSelecionando;
+      this.destinoOut.emit(this.cardTitle);
+      this.isActivated = !this.isActivated;  
   }
 
   limpar(){
-    if(this.estaSelecionando){
-      this.estaSelecionando = false;
-      this.isActivated = !this.isActivated;
-    }
+    if(this.isActivated) this.isActivated = !this.isActivated; 
   }
 
   emitirEvents(){

@@ -3,6 +3,7 @@ import { CardViagemComponent } from './../card-viagem/card-viagem.component';
 import { ViagemService } from './../../viagem/viagem/viagem.service';
 import { Destino } from '../../viagem/viagem/destino';
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Viagem } from '../../viagem/viagem/viagem';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ComprarComponent implements OnInit {
   itens: string[] = [];
 
   isAnySelected: boolean = false;
+  destinoFoiSelecionado: boolean = false;
 
   nome: string;
   destino: string;
@@ -33,7 +35,7 @@ export class ComprarComponent implements OnInit {
         destinos => {
           this.destinos = destinos
           this.itens = this.gerarCidades(destinos);
-          console.log(this.itens)
+          // console.log(this.itens)
         },
         erro => console.log(erro)
       )
@@ -61,20 +63,41 @@ export class ComprarComponent implements OnInit {
     this.destinoSelecionado = event;
   }
 
-  checarAlgumSelecionado(selecionando: string){
+  checarAlgumSelecionado(selecionando: string) {
     let cards: CardViagemComponent[] = this.cardsViagem.toArray();
-    cards.forEach(element =>{
-      if(element.isActivated && element.cardTitle != selecionando){
+    cards.forEach(element => {
+      if (element.cardTitle != selecionando) {
         element.limpar();
       }
     });
   }
 
+  validarPedido(viagem: Viagem) {
+    if (viagem.destino && viagem.partida && viagem.passageiro)
+      return viagem
+    else return undefined;
+  }
+
   fazerCompra() {
-    console.log("Nome do passageiro: " + this.nome);
-    console.log("Destino do passageiro: " + this.destino);
-    console.log("Partida do passageiro: " + this.partida);
-    console.log("Selecionando: " + this.isAnySelected);
+
+    let viagem: Viagem = {
+      destino: this.destino,
+      partida: this.partida,
+      passageiro: this.nome
+    }
+
+    viagem = this.validarPedido(viagem) 
+    console.log(viagem);
+    if(viagem){
+      this.http.setViagem(viagem)
+      .subscribe(
+        viagem =>{
+          console.log("foi salvo")
+          console.log(viagem)
+        },
+        erro => console.log(erro)
+      );
+    }
   }
 
 }

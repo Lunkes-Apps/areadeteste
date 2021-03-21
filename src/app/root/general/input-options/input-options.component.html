@@ -1,12 +1,10 @@
 <div class="mb-3 row">
-    <label [for]="for" class="col-lg-2 col-form-label">{{label}}</label>
+    <label class="col-lg-2 col-form-label">{{label}}</label>
     <div class="col-lg-10">
-        <input [type]="type" class="form-control" list="datalistOptions" 
-         [(ngModel)] = "text" (ngModelChange) = "emitirEvent()" class="form-control">
-        <datalist id="datalistOptions">
-            <option *ngFor="let item of itens" [value]="item">
-        </datalist>
+        <select #thisSelect class="form-select" (change)="emitirEvent(thisSelect.value)">
+            <option selected>{{padrao}}</option>
+            <option *ngFor="let item of itens;" [value]="item">{{item}}</option>
+        </select>
     </div>
+
 </div>
-
-

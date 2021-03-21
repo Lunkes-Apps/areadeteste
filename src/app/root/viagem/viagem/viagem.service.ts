@@ -16,6 +16,10 @@ export class ViagemService {
 
   getDestino(){
     return this.http.get<Destino[]>('http://localhost:3001/destinos');
-  }  
+  } 
+  
+  setViagem(viagem: Viagem){
+    return this.http.post<Viagem[]>('http://localhost:3001/viagens', viagem);
+  }
 
 }
