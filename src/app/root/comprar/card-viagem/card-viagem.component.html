@@ -1,0 +1,8 @@
+<div (click)="selecionar(); emitirEvents()" class="card ajuste" [ngClass]="{
+    'text-white bg-primary mb-3': isActivated}" style="width: 18rem;">
+    <img [src]="pathImg" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{cardTitle}}</h5>
+        <p class="card-text">{{descricao}}</p>
+    </div>
+</div>

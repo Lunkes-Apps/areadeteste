@@ -1,0 +1,33 @@
+<div class="container-lg">
+    
+        <!-- Formulário -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Comprar Passagens</h2>
+            </div>
+            <div class="card-body">
+                <lnks-input (valueOut) = "nome = $event" label="Passageiro" type="text" id="passageiro-form"></lnks-input>
+            </div>
+        </div>
+
+        <!-- Cards com os destinos --> 
+        <h3 class="text-center">{{mensagem}}</h3>
+        <div class="row">
+            <div class="col-4" *ngFor="let d of destinos; let i = index">
+    <!-- this.isActivatedOut.emit(this.isActivated); (isActivatedOut) = "checarSelecionado($event)" -->
+            <lnks-card-viagem id = "{{'viagem' + i}}"
+                [pathImg]="d.pathImage" 
+                [cardTitle]="d.cidade" 
+                [descricao]="d.descricao" 
+                [anyActivated] = "isAnySelected"
+                [sameSelected] = "isSame"                
+                (destinoOut) = "checarSelecionado($event)"
+                >
+            </lnks-card-viagem>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" (click)="fazerCompra()" class="ajusteBtn btn btn-primary mb-3">Comprar</button>
+        </div>
+
+</div>

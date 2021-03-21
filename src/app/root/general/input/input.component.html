@@ -1,0 +1,6 @@
+<div class="mb-3 row">
+  <label [for]="for" class="col-lg-2 col-form-label">{{label}}</label>
+  <div class="col-lg-10">
+    <input  [(ngModel)] = "value"  (ngModelChange) = "valueOut.emit(value)" class="form-control">
+  </div>
+</div>
