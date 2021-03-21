@@ -83,7 +83,8 @@ export class ComprarComponent implements OnInit {
     let viagem: Viagem = {
       destino: this.destino,
       partida: this.partida,
-      passageiro: this.nome
+      passageiro: this.nome,
+      data: new Date()
     }
 
     viagem = this.validarPedido(viagem) 
