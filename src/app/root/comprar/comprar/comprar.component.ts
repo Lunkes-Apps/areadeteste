@@ -5,6 +5,7 @@ import { Destino } from '../../viagem/viagem/destino';
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Viagem } from '../../viagem/viagem/viagem';
 import { Router } from '@angular/router';
+import { Percurso } from '../../viagem/viagem/percurso';
 
 
 @Component({
@@ -74,12 +75,14 @@ export class ComprarComponent implements OnInit {
   }
 
   validarPedido(viagem: Viagem) {
-    if (viagem.destino && viagem.partida && viagem.passageiro)
-      return viagem
+    if (viagem.destino && viagem.partida && viagem.passageiro && viagem.destino != viagem.partida) {
+      viagem.data = new Date();
+      return viagem;
+    }
     else return undefined;
   }
 
-  fazerCompra() {
+  async fazerCompra() {
 
     let viagem: Viagem = {
       destino: this.destino,
@@ -88,18 +91,27 @@ export class ComprarComponent implements OnInit {
       data: new Date()
     }
 
-    viagem = this.validarPedido(viagem) 
+    viagem = this.validarPedido(viagem)
     console.log(viagem);
-    if(viagem){
-      this.http.setViagem(viagem)
-      .subscribe(
-        viagem =>{
-          console.log("foi salvo")
-          console.log(viagem)
-          this.router.navigate(['/viagem']);
+
+    if (viagem) {
+      this.http.getDistancia(viagem.partida, viagem.destino)
+        .subscribe(elements => {
+          console.log('inicio');
+          viagem.distancia = parseFloat(elements[0].distancia);
+          viagem.valor = (viagem.distancia * 0.87).toFixed(2);
+          this.http.setViagem(viagem)
+            .subscribe(
+              viagem => {
+                console.log("foi salvo")
+                console.log(viagem)
+                this.router.navigate(['/viagem']);
+              },
+              erro => console.log(erro)
+            );
         },
-        erro => console.log(erro)
-      );
+          erro => console.log(erro)
+        );
     }
   }
 

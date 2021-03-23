@@ -4,6 +4,6 @@ export interface Viagem{
     destino: string;
     data?: Date;
     distancia?: number;
-    valor?: number;
+    valor?: string;
     passageiro: string;
 }
