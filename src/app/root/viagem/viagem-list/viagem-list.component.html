@@ -9,8 +9,8 @@
                     <th scope="col">Partida</th>
                     <th scope="col">Destino</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Distância(Km)</th>
-                    <th scope="col">Valor(R$)</th>
+                    <th scope="col">Distância</th>
+                    <th scope="col">Valor</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,9 +19,9 @@
                     <td>{{viagem.passageiro}}</td>
                     <td>{{viagem.partida}}</td>
                     <td>{{viagem.destino}}</td>
-                    <td>{{viagem.data}}</td>
-                    <td>{{viagem.distancia}}</td>
-                    <td>{{viagem.valor}}</td>
+                    <td>{{viagem.data | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{viagem.distancia}} Km</td>
+                    <td>{{viagem.valor | currency:'BRL'}}</td>
                 </tr>
             </tbody>
         </table>
